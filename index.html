@@ -3,767 +3,300 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>PAID BUT PRESSURED — Options Screener</title>
+<title>PaidButPressured — Options Screener</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --red: #E8001D;
-    --red-dim: #8B0010;
-    --white: #FFFFFF;
-    --off-white: #C8C8C8;
-    --black: #000000;
-    --stripe: rgba(255,255,255,0.03);
+    --black: #0B0B0C;
+    --card: #111113;
+    --border: #1E1E21;
+    --gold: #D4AF37;
+    --gold-light: #F6E27A;
+    --white: #F5F5F5;
+    --muted: #6B6B70;
+    --danger: #C1121F;
+    --green: #22C55E;
   }
-
   html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 
-  body {
-    background: #000;
-    color: var(--white);
-    font-family: 'Barlow', sans-serif;
-    overflow-x: hidden;
-    min-height: 100vh;
-  }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 999; padding: 20px 40px; display: flex; align-items: center; justify-content: space-between; background: rgba(11,11,12,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.1rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  .nav-logo span { color: var(--gold); }
+  .nav-cta { background: var(--gold); color: var(--black); font-weight: 700; font-size: 0.78rem; letter-spacing: 0.05em; padding: 10px 20px; border: none; cursor: pointer; text-decoration: none; transition: background 0.2s; display: inline-block; }
+  .nav-cta:hover { background: var(--gold-light); }
 
-  /* SCANLINE OVERLAY */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0,0,0,0.15) 2px,
-      rgba(0,0,0,0.15) 4px
-    );
-    pointer-events: none;
-    z-index: 100;
-  }
+  .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 120px 24px 80px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: 35%; left: 50%; transform: translate(-50%,-50%); width: 700px; height: 350px; background: radial-gradient(ellipse, rgba(212,175,55,0.09) 0%, transparent 70%); pointer-events: none; }
+  .hero-eyebrow { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; opacity: 0; animation: fadeUp 0.6s 0.1s ease forwards; }
+  .hero-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: clamp(3.5rem, 10vw, 8rem); line-height: 0.92; text-transform: uppercase; color: var(--white); opacity: 0; animation: fadeUp 0.7s 0.2s ease forwards; position: relative; z-index: 1; }
+  .hero-title .gold { color: var(--gold); }
+  .hero-sub { font-size: clamp(0.92rem, 2vw, 1.1rem); color: var(--muted); line-height: 1.75; max-width: 500px; margin-top: 28px; opacity: 0; animation: fadeUp 0.7s 0.35s ease forwards; }
+  .hero-actions { display: flex; align-items: center; gap: 16px; margin-top: 44px; flex-wrap: wrap; justify-content: center; opacity: 0; animation: fadeUp 0.7s 0.45s ease forwards; }
+  .btn-primary { background: var(--gold); color: var(--black); font-weight: 700; font-size: 0.88rem; letter-spacing: 0.05em; padding: 16px 32px; border: none; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s; display: inline-block; }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-ghost { color: var(--muted); font-size: 0.85rem; font-weight: 500; text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 2px; transition: color 0.2s; }
+  .btn-ghost:hover { color: var(--white); }
 
-  /* WARNING STRIPE HEADER */
-  .warning-tape {
-    width: 100%;
-    background: repeating-linear-gradient(
-      -45deg,
-      var(--red) 0px,
-      var(--red) 18px,
-      #000 18px,
-      #000 36px
-    );
-    padding: 10px 0;
-    text-align: center;
-    overflow: hidden;
-  }
-  .warning-tape span {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 0.75rem;
-    letter-spacing: 0.35em;
-    color: #fff;
-    text-shadow: 0 0 8px rgba(0,0,0,0.8);
-    white-space: nowrap;
-    animation: marquee 18s linear infinite;
-    display: inline-block;
-  }
-  @keyframes marquee {
-    from { transform: translateX(100vw); }
-    to { transform: translateX(-100%); }
-  }
+  .signal-preview { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; max-width: 320px; margin: 60px auto 0; font-size: 0.82rem; opacity: 0; animation: fadeUp 0.7s 0.55s ease forwards; }
+  .sp-badge { background: rgba(34,197,94,0.15); color: #22C55E; border: 1px solid rgba(34,197,94,0.3); padding: 3px 10px; border-radius: 4px; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; }
+  .sp-ticker { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.4rem; }
+  .sp-direction { color: var(--danger); }
+  .sp-conf { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 2.5rem; color: var(--gold); }
+  .sp-row { display: flex; justify-content: space-between; padding: 8px 0; border-top: 1px solid var(--border); color: var(--muted); }
+  .sp-row span:last-child { color: var(--white); font-weight: 600; }
 
-  /* HERO */
-  .hero {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 80px 24px 60px;
-    text-align: center;
-    overflow: hidden;
-  }
+  .stats-bar { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 40px; display: flex; align-items: center; justify-content: center; gap: 60px; flex-wrap: wrap; background: var(--card); }
+  .stat-value { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 2rem; color: var(--gold); }
+  .stat-label { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+  .stat-divider { width: 1px; height: 40px; background: var(--border); }
 
-  /* big red glow behind logo text */
-  .hero::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -60%);
-    width: 600px;
-    height: 300px;
-    background: radial-gradient(ellipse at center, rgba(232,0,29,0.18) 0%, transparent 70%);
-    pointer-events: none;
-  }
+  .section { padding: 100px 40px; max-width: 1100px; margin: 0 auto; }
+  .section-eyebrow { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .section-heading { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: clamp(2rem, 5vw, 3.5rem); text-transform: uppercase; line-height: 1; color: var(--white); margin-bottom: 60px; }
 
-  .logo-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: clamp(0.6rem, 2vw, 0.8rem);
-    letter-spacing: 0.5em;
-    color: var(--red);
-    text-transform: uppercase;
-    margin-bottom: 16px;
-    animation: fadeUp 0.6s ease both;
-  }
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .feature-card { background: var(--black); padding: 40px 36px; opacity: 0; transform: translateY(20px); transition: background 0.25s, opacity 0.5s ease, transform 0.5s ease; }
+  .feature-card.visible { opacity: 1; transform: translateY(0); }
+  .feature-card:hover { background: #0f0f11; }
+  .feature-icon { font-size: 1.4rem; margin-bottom: 20px; }
+  .feature-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white); margin-bottom: 12px; }
+  .feature-desc { font-size: 0.86rem; line-height: 1.7; color: var(--muted); }
 
-  .logo {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: clamp(3.5rem, 12vw, 9rem);
-    line-height: 0.88;
-    text-transform: uppercase;
-    letter-spacing: -0.01em;
-    color: var(--white);
-    animation: fadeUp 0.7s 0.1s ease both;
-    position: relative;
-    z-index: 1;
-  }
-  .logo .accent { color: var(--red); }
+  .how-section { padding: 100px 40px; background: var(--card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .how-inner { max-width: 900px; margin: 0 auto; }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 40px; margin-top: 60px; }
+  .step { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .step.visible { opacity: 1; transform: translateY(0); }
+  .step-num { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 3.5rem; color: var(--border); line-height: 1; margin-bottom: 16px; }
+  .step-title { font-weight: 600; font-size: 1rem; color: var(--white); margin-bottom: 10px; }
+  .step-desc { font-size: 0.85rem; line-height: 1.7; color: var(--muted); }
 
-  .tagline {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: clamp(1rem, 3vw, 1.5rem);
-    letter-spacing: 0.15em;
-    color: var(--off-white);
-    text-transform: uppercase;
-    margin-top: 20px;
-    animation: fadeUp 0.7s 0.2s ease both;
-  }
-
-  /* COMING SOON BADGE */
-  .badge-row {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-top: 36px;
-    animation: fadeUp 0.7s 0.3s ease both;
-  }
-  .badge {
-    border: 2px solid var(--red);
-    padding: 8px 20px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 0.85rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--red);
-    position: relative;
-    overflow: hidden;
-  }
-  .badge::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--red);
-    opacity: 0.08;
-  }
-
-  .divider-line {
-    width: 1px;
-    height: 30px;
-    background: rgba(255,255,255,0.2);
-  }
-
-  .countdown-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 0.85rem;
-    letter-spacing: 0.2em;
-    color: var(--off-white);
-    text-transform: uppercase;
-  }
-
-  /* SECTION DIVIDER */
-  .rule {
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(to right, transparent, rgba(255,255,255,0.15), transparent);
-    margin: 0;
-  }
-
-  /* FEATURES */
-  .features {
-    padding: 80px 24px;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .section-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 0.7rem;
-    letter-spacing: 0.5em;
-    text-transform: uppercase;
-    color: var(--red);
-    margin-bottom: 12px;
-    text-align: center;
-  }
-
-  .section-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: clamp(2.5rem, 7vw, 5rem);
-    text-transform: uppercase;
-    line-height: 0.9;
-    color: var(--white);
-    text-align: center;
-    margin-bottom: 60px;
-  }
-
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2px;
-    border: 1px solid rgba(255,255,255,0.08);
-  }
-
-  .feature-card {
-    padding: 36px 32px;
-    border: 1px solid rgba(255,255,255,0.06);
-    position: relative;
-    transition: background 0.3s;
-    background: rgba(255,255,255,0.01);
-  }
-  .feature-card:hover { background: rgba(232,0,29,0.05); }
-  .feature-card:hover .feature-num { color: var(--red); }
-
-  .feature-num {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 3rem;
-    color: rgba(255,255,255,0.06);
-    line-height: 1;
-    transition: color 0.3s;
-    margin-bottom: 8px;
-  }
-
-  .feature-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 1.4rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--white);
-    margin-bottom: 10px;
-  }
-
-  .feature-desc {
-    font-size: 0.9rem;
-    line-height: 1.6;
-    color: var(--off-white);
-    font-weight: 400;
-  }
-
-  /* PRICING */
-  .pricing {
-    padding: 80px 24px;
-    max-width: 900px;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  .pricing-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2px;
-    margin-top: 50px;
-  }
-
-  @media (max-width: 600px) {
-    .pricing-cards { grid-template-columns: 1fr; }
-  }
-
-  .price-card {
-    padding: 48px 36px;
-    border: 1px solid rgba(255,255,255,0.08);
-    position: relative;
-    text-align: left;
-    background: rgba(255,255,255,0.01);
-  }
-  .price-card.featured {
-    border-color: var(--red);
-    background: rgba(232,0,29,0.05);
-  }
-
-  .price-tag-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 0.7rem;
-    letter-spacing: 0.45em;
-    text-transform: uppercase;
-    color: var(--off-white);
-    margin-bottom: 16px;
-    display: block;
-  }
-  .price-card.featured .price-tag-label { color: var(--red); }
-
-  .price-value {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: clamp(3.5rem, 8vw, 5.5rem);
-    line-height: 1;
-    color: var(--white);
-  }
-  .price-value sub {
-    font-size: 1.6rem;
-    vertical-align: super;
-    font-weight: 700;
-  }
-  .price-value span {
-    font-size: 1.2rem;
-    letter-spacing: 0.05em;
-    font-weight: 700;
-  }
-
-  .price-note {
-    font-size: 0.85rem;
-    color: var(--off-white);
-    margin-top: 14px;
-    line-height: 1.5;
-  }
+  .pricing-section { padding: 100px 40px; max-width: 900px; margin: 0 auto; text-align: center; }
+  .founder-bar { background: var(--card); border: 1px solid var(--border); padding: 20px 28px; margin-bottom: 40px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; text-align: left; }
+  .founder-bar-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .founder-bar-track { height: 3px; background: var(--border); width: 200px; }
+  .founder-bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); width: 0%; transition: width 1.2s ease; }
+  .founder-count { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.8rem; color: var(--gold); }
+  .founder-count-label { font-size: 0.7rem; color: var(--muted); }
+  .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); text-align: left; margin-top: 50px; }
+  .price-card { background: var(--black); padding: 48px 40px; position: relative; }
+  .price-card.featured { background: #0d0c09; border: 2px solid var(--gold); }
+  .price-tag { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
+  .price-tag.gold { color: var(--gold); }
+  .price-amount { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 4rem; color: var(--white); line-height: 1; margin-bottom: 8px; }
+  .price-amount sup { font-size: 1.5rem; vertical-align: top; margin-top: 10px; display: inline-block; }
+  .price-amount span { font-size: 1.2rem; color: var(--muted); }
+  .price-note { font-size: 0.82rem; color: var(--muted); line-height: 1.6; margin-bottom: 28px; }
   .price-note strong { color: var(--white); }
+  .price-perks { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .price-perks li { font-size: 0.84rem; color: var(--muted); display: flex; align-items: center; gap: 10px; }
+  .price-perks li::before { content: '✓'; color: var(--gold); font-weight: 700; flex-shrink: 0; }
+  .founder-ribbon { position: absolute; top: 16px; right: 16px; background: var(--gold); color: var(--black); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 4px 10px; }
 
-  .price-perks {
-    margin-top: 28px;
-    list-style: none;
-  }
-  .price-perks li {
-    font-size: 0.88rem;
-    color: var(--off-white);
-    padding: 6px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .price-perks li::before {
-    content: '→';
-    color: var(--red);
-    font-weight: 700;
-    font-size: 0.9rem;
-    flex-shrink: 0;
-  }
-  .price-card.featured .price-perks li::before { color: var(--red); }
+  .signup-section { padding: 100px 40px; background: var(--card); border-top: 1px solid var(--border); text-align: center; }
+  .signup-inner { max-width: 500px; margin: 0 auto; }
+  .signup-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: clamp(2.5rem, 6vw, 4rem); text-transform: uppercase; line-height: 0.95; color: var(--white); margin-bottom: 20px; }
+  .signup-title span { color: var(--gold); }
+  .signup-sub { font-size: 0.9rem; color: var(--muted); line-height: 1.7; margin-bottom: 40px; }
+  .signup-sub strong { color: var(--white); }
+  .signup-form { display: flex; flex-direction: column; gap: 10px; }
+  .signup-form input { background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--white); font-family: 'Inter', sans-serif; font-size: 0.92rem; padding: 16px 20px; outline: none; transition: border 0.2s; border-radius: 0; -webkit-appearance: none; }
+  .signup-form input::placeholder { color: var(--muted); }
+  .signup-form input:focus { border-color: var(--gold); }
+  .signup-form button { background: var(--gold); border: none; color: var(--black); font-family: 'Inter', sans-serif; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 18px; cursor: pointer; transition: background 0.2s, transform 0.15s; }
+  .signup-form button:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .signup-form button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .form-disclaimer { font-size: 0.7rem; color: var(--muted); margin-top: 16px; line-height: 1.6; opacity: 0.5; }
+  .success-msg { display: none; padding: 32px; border: 1px solid var(--gold); background: rgba(212,175,55,0.05); }
+  .success-msg h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.8rem; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .success-msg p { font-size: 0.85rem; color: var(--muted); }
 
-  .founder-ribbon {
-    position: absolute;
-    top: 0; right: 0;
-    background: var(--red);
-    color: #fff;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    padding: 5px 14px;
-  }
+  footer { border-top: 1px solid var(--border); padding: 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+  .footer-logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .footer-logo span { color: var(--gold); }
+  footer p { font-size: 0.7rem; color: var(--muted); line-height: 1.6; max-width: 440px; opacity: 0.4; }
 
-  /* SLOTS BAR */
-  .slots-bar {
-    padding: 40px 24px;
-    text-align: center;
-  }
-  .slots-inner {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  .slots-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 0.75rem;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    color: var(--off-white);
-    margin-bottom: 12px;
-  }
-  .progress-track {
-    width: 100%;
-    height: 6px;
-    background: rgba(255,255,255,0.08);
-    position: relative;
-    overflow: hidden;
-  }
-  .progress-fill {
-    height: 100%;
-    background: var(--red);
-    width: 0%;
-    animation: fillBar 2s 1s ease forwards;
-  }
-  @keyframes fillBar { to { width: 18%; } }
-
-  .slots-count {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 8px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 0.8rem;
-    letter-spacing: 0.15em;
-    color: rgba(255,255,255,0.3);
-  }
-  .slots-count .taken { color: var(--red); }
-
-  /* SIGNUP SECTION */
-  .signup-section {
-    padding: 100px 24px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .signup-section::before {
-    content: 'GET IN';
-    position: absolute;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: clamp(8rem, 25vw, 18rem);
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.02);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    white-space: nowrap;
+  @media (max-width: 640px) {
+    nav { padding: 16px 20px; }
+    .section { padding: 70px 20px; }
+    .how-section { padding: 70px 20px; }
+    .pricing-section { padding: 70px 20px; }
+    .signup-section { padding: 70px 20px; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .stats-bar { gap: 24px; padding: 24px 20px; }
+    .stat-divider { display: none; }
+    footer { padding: 32px 20px; flex-direction: column; }
+    .founder-bar { flex-direction: column; text-align: center; }
+    .founder-bar-track { width: 100%; }
   }
 
-  .signup-inner {
-    max-width: 560px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-  }
-
-  .cta-headline {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: clamp(2.8rem, 8vw, 5.5rem);
-    text-transform: uppercase;
-    line-height: 0.9;
-    margin-bottom: 16px;
-  }
-  .cta-sub {
-    font-size: 0.95rem;
-    color: var(--off-white);
-    line-height: 1.6;
-    margin-bottom: 40px;
-  }
-  .cta-sub strong { color: var(--white); }
-
-  .signup-form {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .signup-form input {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.12);
-    color: #fff;
-    font-family: 'Barlow', sans-serif;
-    font-size: 0.95rem;
-    padding: 16px 20px;
-    outline: none;
-    transition: border 0.2s;
-    -webkit-appearance: none;
-    border-radius: 0;
-  }
-  .signup-form input::placeholder { color: rgba(255,255,255,0.3); }
-  .signup-form input:focus { border-color: var(--red); }
-
-  .signup-form button {
-    background: var(--red);
-    border: none;
-    color: #fff;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 1.1rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    padding: 18px;
-    cursor: pointer;
-    transition: background 0.2s, letter-spacing 0.2s;
-    border-radius: 0;
-  }
-  .signup-form button:hover {
-    background: #ff0020;
-    letter-spacing: 0.35em;
-  }
-
-  .form-disclaimer {
-    font-size: 0.75rem;
-    color: rgba(255,255,255,0.25);
-    margin-top: 14px;
-    line-height: 1.5;
-  }
-
-  /* SUCCESS STATE */
-  .success-msg {
-    display: none;
-    padding: 28px;
-    border: 1px solid var(--red);
-    background: rgba(232,0,29,0.06);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 1.3rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--white);
-  }
-
-  /* FOOTER */
-  footer {
-    border-top: 1px solid rgba(255,255,255,0.06);
-    padding: 40px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-  .footer-logo {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 1.1rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.4);
-  }
-  .footer-logo span { color: var(--red); }
-  footer p {
-    font-size: 0.78rem;
-    color: rgba(255,255,255,0.2);
-    line-height: 1.5;
-    max-width: 400px;
-  }
-
-  /* ANIMATIONS */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 </style>
 </head>
 <body>
 
-<!-- WARNING TAPE TOP -->
-<div class="warning-tape">
-  <span>⚠ FOUNDER RATE LOCKING IN NOW — FIRST 150 MEMBERS ONLY — $14.99/MO FOR LIFE — PRICE DOUBLES AFTER — ⚠ PAID BUT PRESSURED OPTIONS SCREENER — LAUNCHING SOON — DON'T SLEEP — ⚠&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<nav>
+  <div class="nav-logo">PAID <span>BUT</span> PRESSURED</div>
+  <a href="#signup" class="nav-cta">Get Early Access</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">Options Intelligence. No Noise.</div>
+  <div class="hero-title">PAID<br><span class="gold">BUT</span><br>PRESSURED</div>
+  <p class="hero-sub">A real-time options screener that finds high-conviction setups — so you stop guessing and start trading with a real edge.</p>
+  <div class="hero-actions">
+    <a href="#signup" class="btn-primary">Lock In Founder Rate — $14.99/mo</a>
+    <a href="#features" class="btn-ghost">See how it works ↓</a>
+  </div>
+  <div class="signal-preview">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <span class="sp-badge">🟢 GO NOW</span>
+      <span style="font-size:0.65rem;color:#6B6B70">LIVE SIGNAL</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:14px">
+      <div><div class="sp-ticker">NVDA <span class="sp-direction">PUT</span></div><div style="font-size:0.7rem;color:#6B6B70;margin-top:3px">Double Top · Swing · 5/7 Gates</div></div>
+      <div class="sp-conf">91%</div>
+    </div>
+    <div class="sp-row"><span>Entry</span><span>$876.40</span></div>
+    <div class="sp-row"><span>Strike</span><span>$860.00</span></div>
+    <div class="sp-row"><span>Target</span><span>$843.20</span></div>
+    <div class="sp-row"><span>R:R</span><span style="color:#22C55E">2.1x</span></div>
+    <div class="sp-row"><span>Fibonacci</span><span style="color:#D4AF37">🔶 61.8%</span></div>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-value">130+</div><div class="stat-label">Tickers Scanned</div></div>
+  <div class="stat-divider"></div>
+  <div class="stat-item"><div class="stat-value">7</div><div class="stat-label">Execution Gates</div></div>
+  <div class="stat-divider"></div>
+  <div class="stat-item"><div class="stat-value">Real-Time</div><div class="stat-label">Market Data</div></div>
+  <div class="stat-divider"></div>
+  <div class="stat-item"><div class="stat-value">$0</div><div class="stat-label">To Start</div></div>
 </div>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="logo-label">Options Intelligence. No Noise.</div>
-  <div class="logo">PAID<br><span class="accent">BUT</span><br>PRESSURED</div>
-  <div class="tagline">Options Screener — Built By A Trader, For Traders</div>
-  <div class="badge-row">
-    <div class="badge">Coming Soon</div>
-    <div class="divider-line"></div>
-    <div class="countdown-label">Founder Rate Closing Fast</div>
-  </div>
-</section>
-
-<div class="rule"></div>
-
-<!-- FEATURES -->
-<section class="features">
-  <div class="section-label">What You're Getting</div>
-  <div class="section-title">The Edge<br>You're Missing</div>
-
+<section class="section" id="features">
+  <div class="section-eyebrow">What You're Getting</div>
+  <div class="section-heading">The Edge<br>You've Been Missing</div>
   <div class="features-grid">
-    <div class="feature-card reveal">
-      <div class="feature-num">01</div>
-      <div class="feature-title">Real-Time Signal Scanner</div>
-      <div class="feature-desc">Multi-timeframe pattern detection across hundreds of tickers. Broken necklines, RSI divergence, volume confirmation — all in one view.</div>
-    </div>
-    <div class="feature-card reveal">
-      <div class="feature-num">02</div>
-      <div class="feature-title">7-Point Execution Gate</div>
-      <div class="feature-desc">Every signal must pass a 7-factor quality filter — IV rank, premium cost, DTE, earnings clearance, measured move, and more. No junk trades.</div>
-    </div>
-    <div class="feature-card reveal">
-      <div class="feature-num">03</div>
-      <div class="feature-title">AI Trade Brief</div>
-      <div class="feature-desc">Each setup comes with an AI-generated brief covering the thesis, risk levels, and key levels to watch. Know the play before you enter it.</div>
-    </div>
-    <div class="feature-card reveal">
-      <div class="feature-num">04</div>
-      <div class="feature-title">Confidence Buckets</div>
-      <div class="feature-desc">Signals ranked GO NOW, WATCHING, or ON DECK so you always know what's fire and what's still developing.</div>
-    </div>
-    <div class="feature-card reveal">
-      <div class="feature-num">05</div>
-      <div class="feature-title">Sector-Sorted Watchlist</div>
-      <div class="feature-desc">Track setups by sector — tech, energy, defense, biotech — so you're scanning smart, not drowning in noise.</div>
-    </div>
-    <div class="feature-card reveal">
-      <div class="feature-num">06</div>
-      <div class="feature-title">Telegram Alerts</div>
-      <div class="feature-desc">High-conviction signals pushed straight to your phone. No refreshing. No FOMO. Just the alert when it counts.</div>
-    </div>
+    <div class="feature-card"><div class="feature-icon">📡</div><div class="feature-title">Real-Time Signal Scanner</div><div class="feature-desc">Multi-timeframe pattern detection across 130+ tickers. Broken necklines, RSI divergence, volume confirmation — surfaced in one clean view.</div></div>
+    <div class="feature-card"><div class="feature-icon">🔒</div><div class="feature-title">7-Point Execution Gate</div><div class="feature-desc">Every signal passes a 7-factor quality filter — IV rank, premium cost, DTE, earnings clearance, measured move, volume, and momentum. No noise.</div></div>
+    <div class="feature-card"><div class="feature-icon">🔶</div><div class="feature-title">Fibonacci Confluence</div><div class="feature-desc">Signals validated at key Fibonacci retracement levels. When pattern and Fibonacci align — that's your highest conviction entry.</div></div>
+    <div class="feature-card"><div class="feature-icon">📊</div><div class="feature-title">Market Regime Detection</div><div class="feature-desc">The scanner reads breadth, index health, and rally authenticity to classify the market — BULL CONFIRMED, BEAR CONFIRMED, BULL TRAP, and more.</div></div>
+    <div class="feature-card"><div class="feature-icon">⚡</div><div class="feature-title">Clear Entry. Clear Exit.</div><div class="feature-desc">Strike, premium, target, stop, and R:R on every signal. Every card tells you exactly what to do and when to get out.</div></div>
+    <div class="feature-card"><div class="feature-icon">🤖</div><div class="feature-title">AI Trade Brief</div><div class="feature-desc">Each setup comes with an AI-generated brief covering the thesis, key levels, and risk factors. Know the full play before you put money down.</div></div>
   </div>
 </section>
 
-<div class="rule"></div>
-
-<!-- PRICING -->
-<section class="pricing">
-  <div class="section-label">Simple Pricing</div>
-  <div class="section-title">Lock In.<br>Save Forever.</div>
-
-  <!-- SLOTS -->
-  <div class="slots-bar">
-    <div class="slots-inner">
-      <div class="slots-label">Founder Seats Remaining</div>
-      <div class="progress-track">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
-      <div class="slots-count">
-        <span class="taken" id="claimedCount">0 Claimed</span>
-        <span>150 Total</span>
-      </div>
+<div class="how-section" id="how">
+  <div class="how-inner">
+    <div class="section-eyebrow">Simple Process</div>
+    <div class="section-heading">Three Steps.<br>That's It.</div>
+    <div class="steps">
+      <div class="step"><div class="step-num">01</div><div class="step-title">Pick Your Sector</div><div class="step-desc">Choose from Tech, Financials, Energy, Healthcare, Mega Cap, or scan your personal watchlist. Hit run.</div></div>
+      <div class="step"><div class="step-num">02</div><div class="step-title">Read the Signal</div><div class="step-desc">GO NOW means act. WATCHING means wait for confirmation. ON DECK means developing. The scanner tells you exactly where each setup stands.</div></div>
+      <div class="step"><div class="step-num">03</div><div class="step-title">Execute the Trade</div><div class="step-desc">Entry, strike, target, stop, and R:R are already calculated. Follow the card. Take profits at target.</div></div>
     </div>
   </div>
+</div>
 
-  <div class="pricing-cards">
-    <!-- FOUNDER -->
-    <div class="price-card featured reveal">
+<section class="pricing-section" id="pricing">
+  <div class="section-eyebrow">Transparent Pricing</div>
+  <div class="section-heading">Simple.<br>No Games.</div>
+  <div class="founder-bar">
+    <div><div class="founder-bar-label">Founding Member Seats</div><div class="founder-bar-track"><div class="founder-bar-fill" id="founderFill"></div></div></div>
+    <div style="text-align:center"><div class="founder-count" id="claimedCount">0</div><div class="founder-count-label">of 150 claimed</div></div>
+    <div style="text-align:right"><div style="font-size:0.68rem;color:#6B6B70;font-weight:500">FOUNDER RATE CLOSES AT 150</div><div style="font-size:0.88rem;color:#F5F5F5;font-weight:600;margin-top:4px">$14.99/month — locked forever</div></div>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card featured">
       <div class="founder-ribbon">Founder Rate</div>
-      <span class="price-tag-label">First 150 Members</span>
-      <div class="price-value"><sub>$</sub>14<span>.99<br>/mo</span></div>
-      <p class="price-note"><strong>Locked in for life.</strong> Price never changes for you — ever. Founding members keep this rate regardless of future increases.</p>
+      <div class="price-tag gold">First 150 Members</div>
+      <div class="price-amount"><sup>$</sup>14<span>.99/mo</span></div>
+      <p class="price-note"><strong>Locked in for life.</strong> Your rate never increases — ever. Founding members keep $14.99/month regardless of future pricing.</p>
       <ul class="price-perks">
         <li>Full screener access</li>
-        <li>All 6 core features</li>
-        <li>AI trade briefs included</li>
-        <li>Telegram signal alerts</li>
-        <li>Founding member badge</li>
+        <li>Quick & Swing signal types</li>
+        <li>AI trade briefs on every signal</li>
+        <li>Market regime detection</li>
+        <li>Sector scans + personal watchlist</li>
+        <li>Founding member status</li>
         <li>Priority feature requests</li>
       </ul>
     </div>
-    <!-- STANDARD -->
-    <div class="price-card reveal">
-      <span class="price-tag-label">After 150 Members</span>
-      <div class="price-value"><sub>$</sub>29<span>.99<br>/mo</span></div>
-      <p class="price-note">Full access, same screener — but at the standard rate. Still solid value. Just not founder value.</p>
+    <div class="price-card">
+      <div class="price-tag">After 150 Members</div>
+      <div class="price-amount"><sup>$</sup>29<span>.99/mo</span></div>
+      <p class="price-note">Full access to everything — same screener, same signals. Standard rate applies once founding seats are filled.</p>
       <ul class="price-perks">
         <li>Full screener access</li>
-        <li>All 6 core features</li>
-        <li>AI trade briefs included</li>
-        <li>Telegram signal alerts</li>
+        <li>Quick & Swing signal types</li>
+        <li>AI trade briefs on every signal</li>
+        <li>Market regime detection</li>
+        <li>Sector scans + personal watchlist</li>
       </ul>
     </div>
   </div>
 </section>
 
-<div class="rule"></div>
-
-<!-- SIGNUP -->
 <section class="signup-section" id="signup">
   <div class="signup-inner">
-    <div class="cta-headline">Get In<br><span style="color:var(--red)">Early.</span></div>
-    <p class="cta-sub">
-      Drop your email. Lock your founder rate at <strong>$14.99/month for life</strong>.<br>
-      You'll be first notified at launch — no spam, no fluff.
-    </p>
+    <div class="signup-title">Get In<br><span>Early.</span></div>
+    <p class="signup-sub">Drop your email. Lock your founder rate at <strong>$14.99/month for life</strong>.<br>First in line when founder access opens — no spam, no nonsense.</p>
     <div class="signup-form" id="signupForm">
       <input type="text" placeholder="First Name" id="fname" />
       <input type="email" placeholder="Email Address" id="email" />
       <button onclick="handleSignup()">LOCK MY FOUNDER RATE →</button>
     </div>
     <div class="success-msg" id="successMsg">
-      ✓ You're in. Founder rate reserved.<br>We'll hit you at launch.
+      <h3>You're In.</h3>
+      <p>Founder rate reserved. We'll hit you at launch — watch your inbox.</p>
     </div>
-    <p class="form-disclaimer">
-      No card required now. We'll email you when the screener goes live.<br>
-      Founder pricing locked for first 150 signups who subscribe at launch.
-    </p>
+    <p class="form-disclaimer">No card required now. Drop your email and lock your rate.<br>You'll be first notified when founder access opens — first 150 only.</p>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-logo">PAID <span>BUT</span> PRESSURED</div>
-  <p>This screener is an educational tool and does not constitute financial advice. Options trading involves substantial risk. Trade responsibly.</p>
+  <p>Educational tool only. Not financial advice. Options trading involves substantial risk of loss. Past performance does not guarantee future results.</p>
 </footer>
 
 <script>
-  // Scroll reveal
-  const revealEls = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
+  const CLAIMED = 0;
+  const TOTAL   = 150;
+  document.getElementById('claimedCount').textContent = CLAIMED;
+  setTimeout(() => { document.getElementById('founderFill').style.width = Math.min((CLAIMED/TOTAL)*100,100) + '%'; }, 300);
+
+  const revealEls = document.querySelectorAll('.feature-card, .step');
+  const observer  = new IntersectionObserver((entries) => {
     entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 80);
-        observer.unobserve(e.target);
-      }
+      if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); observer.unobserve(e.target); }
     });
   }, { threshold: 0.1 });
   revealEls.forEach(el => observer.observe(el));
 
-  // Slot counter — update this number manually as signups come in
-  const CLAIMED = 0; // update this number as signups grow
-  const TOTAL   = 150;
-  document.getElementById('claimedCount').textContent = CLAIMED + ' Claimed';
-  document.getElementById('progressFill').style.width = Math.min((CLAIMED / TOTAL) * 100, 100) + '%';
-
-  // Form — Mailchimp integration
   async function handleSignup() {
     const fname = document.getElementById('fname').value.trim();
     const email = document.getElementById('email').value.trim();
     const btn   = document.querySelector('.signup-form button');
-
-    if (!fname || !email || !email.includes('@')) {
-      alert('Please fill in your name and a valid email.');
-      return;
-    }
-
+    if (!fname || !email || !email.includes('@')) { alert('Please enter your name and a valid email.'); return; }
     btn.textContent = 'LOCKING IN...';
-    btn.disabled = true;
-
-    // Mailchimp signup via jsonp (no server needed)
-    // Replace YOUR_MAILCHIMP_URL below with your Mailchimp form action URL
-    // Get it from: Mailchimp → Audience → Signup Forms → Embedded Forms → copy the action URL
+    btn.disabled    = true;
     const MAILCHIMP_URL = 'YOUR_MAILCHIMP_URL';
-
     if (MAILCHIMP_URL === 'YOUR_MAILCHIMP_URL') {
-      // Fallback if Mailchimp not yet wired — still show success
       document.getElementById('signupForm').style.display = 'none';
       document.getElementById('successMsg').style.display = 'block';
       return;
     }
-
-    // Build jsonp request
-    const params = new URLSearchParams({
-      EMAIL: email,
-      FNAME: fname,
-      tags:  'founder-rate',
-    });
-
-    const url = MAILCHIMP_URL.replace('/post?', '/post-json?') + '&' + params.toString() + '&c=mailchimpCallback';
-
-    window.mailchimpCallback = function(data) {
-      document.getElementById('signupForm').style.display = 'none';
-      document.getElementById('successMsg').style.display = 'block';
-    };
-
+    window.mailchimpCallback = function() { document.getElementById('signupForm').style.display = 'none'; document.getElementById('successMsg').style.display = 'block'; };
+    const params = new URLSearchParams({ EMAIL: email, FNAME: fname });
     const script = document.createElement('script');
-    script.src = url;
+    script.src   = MAILCHIMP_URL.replace('/post?', '/post-json?') + '&' + params + '&c=mailchimpCallback';
     document.body.appendChild(script);
   }
 </script>
-
 </body>
 </html>
