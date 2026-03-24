@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PAID BUT PRESSURED — Options Screener</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #E8001D;
+    --red-dim: #8B0010;
+    --white: #FFFFFF;
+    --off-white: #C8C8C8;
+    --black: #000000;
+    --stripe: rgba(255,255,255,0.03);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: #000;
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* SCANLINE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.15) 2px,
+      rgba(0,0,0,0.15) 4px
+    );
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  /* WARNING STRIPE HEADER */
+  .warning-tape {
+    width: 100%;
+    background: repeating-linear-gradient(
+      -45deg,
+      var(--red) 0px,
+      var(--red) 18px,
+      #000 18px,
+      #000 36px
+    );
+    padding: 10px 0;
+    text-align: center;
+    overflow: hidden;
+  }
+  .warning-tape span {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    color: #fff;
+    text-shadow: 0 0 8px rgba(0,0,0,0.8);
+    white-space: nowrap;
+    animation: marquee 18s linear infinite;
+    display: inline-block;
+  }
+  @keyframes marquee {
+    from { transform: translateX(100vw); }
+    to { transform: translateX(-100%); }
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px 60px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  /* big red glow behind logo text */
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    width: 600px;
+    height: 300px;
+    background: radial-gradient(ellipse at center, rgba(232,0,29,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .logo-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(0.6rem, 2vw, 0.8rem);
+    letter-spacing: 0.5em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(3.5rem, 12vw, 9rem);
+    line-height: 0.88;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    animation: fadeUp 0.7s 0.1s ease both;
+    position: relative;
+    z-index: 1;
+  }
+  .logo .accent { color: var(--red); }
+
+  .tagline {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    letter-spacing: 0.15em;
+    color: var(--off-white);
+    text-transform: uppercase;
+    margin-top: 20px;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+
+  /* COMING SOON BADGE */
+  .badge-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 36px;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+  .badge {
+    border: 2px solid var(--red);
+    padding: 8px 20px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--red);
+    position: relative;
+    overflow: hidden;
+  }
+  .badge::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--red);
+    opacity: 0.08;
+  }
+
+  .divider-line {
+    width: 1px;
+    height: 30px;
+    background: rgba(255,255,255,0.2);
+  }
+
+  .countdown-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    color: var(--off-white);
+    text-transform: uppercase;
+  }
+
+  /* SECTION DIVIDER */
+  .rule {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.15), transparent);
+    margin: 0;
+  }
+
+  /* FEATURES */
+  .features {
+    padding: 80px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 0.7rem;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    text-transform: uppercase;
+    line-height: 0.9;
+    color: var(--white);
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .feature-card {
+    padding: 36px 32px;
+    border: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+    transition: background 0.3s;
+    background: rgba(255,255,255,0.01);
+  }
+  .feature-card:hover { background: rgba(232,0,29,0.05); }
+  .feature-card:hover .feature-num { color: var(--red); }
+
+  .feature-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 3rem;
+    color: rgba(255,255,255,0.06);
+    line-height: 1;
+    transition: color 0.3s;
+    margin-bottom: 8px;
+  }
+
+  .feature-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .feature-desc {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--off-white);
+    font-weight: 400;
+  }
+
+  /* PRICING */
+  .pricing {
+    padding: 80px 24px;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .pricing-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 50px;
+  }
+
+  @media (max-width: 600px) {
+    .pricing-cards { grid-template-columns: 1fr; }
+  }
+
+  .price-card {
+    padding: 48px 36px;
+    border: 1px solid rgba(255,255,255,0.08);
+    position: relative;
+    text-align: left;
+    background: rgba(255,255,255,0.01);
+  }
+  .price-card.featured {
+    border-color: var(--red);
+    background: rgba(232,0,29,0.05);
+  }
+
+  .price-tag-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 0.7rem;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--off-white);
+    margin-bottom: 16px;
+    display: block;
+  }
+  .price-card.featured .price-tag-label { color: var(--red); }
+
+  .price-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(3.5rem, 8vw, 5.5rem);
+    line-height: 1;
+    color: var(--white);
+  }
+  .price-value sub {
+    font-size: 1.6rem;
+    vertical-align: super;
+    font-weight: 700;
+  }
+  .price-value span {
+    font-size: 1.2rem;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+  }
+
+  .price-note {
+    font-size: 0.85rem;
+    color: var(--off-white);
+    margin-top: 14px;
+    line-height: 1.5;
+  }
+  .price-note strong { color: var(--white); }
+
+  .price-perks {
+    margin-top: 28px;
+    list-style: none;
+  }
+  .price-perks li {
+    font-size: 0.88rem;
+    color: var(--off-white);
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .price-perks li::before {
+    content: '→';
+    color: var(--red);
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+  .price-card.featured .price-perks li::before { color: var(--red); }
+
+  .founder-ribbon {
+    position: absolute;
+    top: 0; right: 0;
+    background: var(--red);
+    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+  }
+
+  /* SLOTS BAR */
+  .slots-bar {
+    padding: 40px 24px;
+    text-align: center;
+  }
+  .slots-inner {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .slots-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--off-white);
+    margin-bottom: 12px;
+  }
+  .progress-track {
+    width: 100%;
+    height: 6px;
+    background: rgba(255,255,255,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--red);
+    width: 0%;
+    animation: fillBar 2s 1s ease forwards;
+  }
+  @keyframes fillBar { to { width: 18%; } }
+
+  .slots-count {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.3);
+  }
+  .slots-count .taken { color: var(--red); }
+
+  /* SIGNUP SECTION */
+  .signup-section {
+    padding: 100px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .signup-section::before {
+    content: 'GET IN';
+    position: absolute;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(8rem, 25vw, 18rem);
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.02);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .signup-inner {
+    max-width: 560px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-headline {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.8rem, 8vw, 5.5rem);
+    text-transform: uppercase;
+    line-height: 0.9;
+    margin-bottom: 16px;
+  }
+  .cta-sub {
+    font-size: 0.95rem;
+    color: var(--off-white);
+    line-height: 1.6;
+    margin-bottom: 40px;
+  }
+  .cta-sub strong { color: var(--white); }
+
+  .signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .signup-form input {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #fff;
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.95rem;
+    padding: 16px 20px;
+    outline: none;
+    transition: border 0.2s;
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+  .signup-form input::placeholder { color: rgba(255,255,255,0.3); }
+  .signup-form input:focus { border-color: var(--red); }
+
+  .signup-form button {
+    background: var(--red);
+    border: none;
+    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 18px;
+    cursor: pointer;
+    transition: background 0.2s, letter-spacing 0.2s;
+    border-radius: 0;
+  }
+  .signup-form button:hover {
+    background: #ff0020;
+    letter-spacing: 0.35em;
+  }
+
+  .form-disclaimer {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.25);
+    margin-top: 14px;
+    line-height: 1.5;
+  }
+
+  /* SUCCESS STATE */
+  .success-msg {
+    display: none;
+    padding: 28px;
+    border: 1px solid var(--red);
+    background: rgba(232,0,29,0.06);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 40px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+  .footer-logo span { color: var(--red); }
+  footer p {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.2);
+    line-height: 1.5;
+    max-width: 400px;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- WARNING TAPE TOP -->
+<div class="warning-tape">
+  <span>⚠ FOUNDER RATE LOCKING IN NOW — FIRST 150 MEMBERS ONLY — $14.99/MO FOR LIFE — PRICE DOUBLES AFTER — ⚠ PAID BUT PRESSURED OPTIONS SCREENER — LAUNCHING SOON — DON'T SLEEP — ⚠&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="logo-label">Options Intelligence. No Noise.</div>
+  <div class="logo">PAID<br><span class="accent">BUT</span><br>PRESSURED</div>
+  <div class="tagline">Options Screener — Built By A Trader, For Traders</div>
+  <div class="badge-row">
+    <div class="badge">Coming Soon</div>
+    <div class="divider-line"></div>
+    <div class="countdown-label">Founder Rate Closing Fast</div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="section-label">What You're Getting</div>
+  <div class="section-title">The Edge<br>You're Missing</div>
+
+  <div class="features-grid">
+    <div class="feature-card reveal">
+      <div class="feature-num">01</div>
+      <div class="feature-title">Real-Time Signal Scanner</div>
+      <div class="feature-desc">Multi-timeframe pattern detection across hundreds of tickers. Broken necklines, RSI divergence, volume confirmation — all in one view.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-num">02</div>
+      <div class="feature-title">7-Point Execution Gate</div>
+      <div class="feature-desc">Every signal must pass a 7-factor quality filter — IV rank, premium cost, DTE, earnings clearance, measured move, and more. No junk trades.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-num">03</div>
+      <div class="feature-title">AI Trade Brief</div>
+      <div class="feature-desc">Each setup comes with an AI-generated brief covering the thesis, risk levels, and key levels to watch. Know the play before you enter it.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-num">04</div>
+      <div class="feature-title">Confidence Buckets</div>
+      <div class="feature-desc">Signals ranked GO NOW, WATCHING, or ON DECK so you always know what's fire and what's still developing.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-num">05</div>
+      <div class="feature-title">Sector-Sorted Watchlist</div>
+      <div class="feature-desc">Track setups by sector — tech, energy, defense, biotech — so you're scanning smart, not drowning in noise.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-num">06</div>
+      <div class="feature-title">Telegram Alerts</div>
+      <div class="feature-desc">High-conviction signals pushed straight to your phone. No refreshing. No FOMO. Just the alert when it counts.</div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- PRICING -->
+<section class="pricing">
+  <div class="section-label">Simple Pricing</div>
+  <div class="section-title">Lock In.<br>Save Forever.</div>
+
+  <!-- SLOTS -->
+  <div class="slots-bar">
+    <div class="slots-inner">
+      <div class="slots-label">Founder Seats Remaining</div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="slots-count">
+        <span class="taken" id="claimedCount">0 Claimed</span>
+        <span>150 Total</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="pricing-cards">
+    <!-- FOUNDER -->
+    <div class="price-card featured reveal">
+      <div class="founder-ribbon">Founder Rate</div>
+      <span class="price-tag-label">First 150 Members</span>
+      <div class="price-value"><sub>$</sub>14<span>.99<br>/mo</span></div>
+      <p class="price-note"><strong>Locked in for life.</strong> Price never changes for you — ever. Founding members keep this rate regardless of future increases.</p>
+      <ul class="price-perks">
+        <li>Full screener access</li>
+        <li>All 6 core features</li>
+        <li>AI trade briefs included</li>
+        <li>Telegram signal alerts</li>
+        <li>Founding member badge</li>
+        <li>Priority feature requests</li>
+      </ul>
+    </div>
+    <!-- STANDARD -->
+    <div class="price-card reveal">
+      <span class="price-tag-label">After 150 Members</span>
+      <div class="price-value"><sub>$</sub>29<span>.99<br>/mo</span></div>
+      <p class="price-note">Full access, same screener — but at the standard rate. Still solid value. Just not founder value.</p>
+      <ul class="price-perks">
+        <li>Full screener access</li>
+        <li>All 6 core features</li>
+        <li>AI trade briefs included</li>
+        <li>Telegram signal alerts</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- SIGNUP -->
+<section class="signup-section" id="signup">
+  <div class="signup-inner">
+    <div class="cta-headline">Get In<br><span style="color:var(--red)">Early.</span></div>
+    <p class="cta-sub">
+      Drop your email. Lock your founder rate at <strong>$14.99/month for life</strong>.<br>
+      You'll be first notified at launch — no spam, no fluff.
+    </p>
+    <div class="signup-form" id="signupForm">
+      <input type="text" placeholder="First Name" id="fname" />
+      <input type="email" placeholder="Email Address" id="email" />
+      <button onclick="handleSignup()">LOCK MY FOUNDER RATE →</button>
+    </div>
+    <div class="success-msg" id="successMsg">
+      ✓ You're in. Founder rate reserved.<br>We'll hit you at launch.
+    </div>
+    <p class="form-disclaimer">
+      No card required now. We'll email you when the screener goes live.<br>
+      Founder pricing locked for first 150 signups who subscribe at launch.
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">PAID <span>BUT</span> PRESSURED</div>
+  <p>This screener is an educational tool and does not constitute financial advice. Options trading involves substantial risk. Trade responsibly.</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // Slot counter — update this number manually as signups come in
+  const CLAIMED = 0; // update this number as signups grow
+  const TOTAL   = 150;
+  document.getElementById('claimedCount').textContent = CLAIMED + ' Claimed';
+  document.getElementById('progressFill').style.width = Math.min((CLAIMED / TOTAL) * 100, 100) + '%';
+
+  // Form — Mailchimp integration
+  async function handleSignup() {
+    const fname = document.getElementById('fname').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const btn   = document.querySelector('.signup-form button');
+
+    if (!fname || !email || !email.includes('@')) {
+      alert('Please fill in your name and a valid email.');
+      return;
+    }
+
+    btn.textContent = 'LOCKING IN...';
+    btn.disabled = true;
+
+    // Mailchimp signup via jsonp (no server needed)
+    // Replace YOUR_MAILCHIMP_URL below with your Mailchimp form action URL
+    // Get it from: Mailchimp → Audience → Signup Forms → Embedded Forms → copy the action URL
+    const MAILCHIMP_URL = 'YOUR_MAILCHIMP_URL';
+
+    if (MAILCHIMP_URL === 'YOUR_MAILCHIMP_URL') {
+      // Fallback if Mailchimp not yet wired — still show success
+      document.getElementById('signupForm').style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+      return;
+    }
+
+    // Build jsonp request
+    const params = new URLSearchParams({
+      EMAIL: email,
+      FNAME: fname,
+      tags:  'founder-rate',
+    });
+
+    const url = MAILCHIMP_URL.replace('/post?', '/post-json?') + '&' + params.toString() + '&c=mailchimpCallback';
+
+    window.mailchimpCallback = function(data) {
+      document.getElementById('signupForm').style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+    };
+
+    const script = document.createElement('script');
+    script.src = url;
+    document.body.appendChild(script);
+  }
+</script>
+
+</body>
+</html>
