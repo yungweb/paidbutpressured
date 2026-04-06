@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>PaidButPressured — Options Screener</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PaidButPressured — Options Intelligence</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --black:#080808; --card:#0d0d0f; --card2:#111115;
-  --border:#1a1a1f; --border2:#252530;
-  --gold:#D4AF37; --gold-light:#F6E27A; --gold-dim:#9A7D1E;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#080808;--card:#0d0d0f;--card2:#111115;
+  --border:#1a1a1f;--border2:#252530;
+  --gold:#D4AF37;--gold-light:#F6E27A;
   --gold-grad:linear-gradient(135deg,#f6e27a 0%,#d4af37 35%,#9a7d1e 65%,#d4af37 80%,#f6e27a 100%);
   --gold-btn:linear-gradient(135deg,#F6E27A 0%,#D4AF37 40%,#B8960C 70%,#D4AF37 100%);
-  --white:#F5F5F5; --muted:#5a5a62; --muted2:#3a3a42;
-  --red:#C1121F; --green:#22C55E;
+  --white:#F5F5F5;--muted:#5a5a62;--muted2:#3a3a42;
+  --red:#C1121F;--green:#22C55E;
 }
 html{scroll-behavior:smooth}
 body{background:var(--black);color:var(--white);font-family:'Barlow',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 .tape{background:var(--gold);padding:7px 0;overflow:hidden;white-space:nowrap}
-.tape-inner{display:inline-flex;gap:0;animation:tape 30s linear infinite}
+.tape-inner{display:inline-flex;animation:tape 35s linear infinite}
 .tape-item{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:0.72rem;letter-spacing:0.25em;color:#000;padding:0 32px;text-transform:uppercase}
 .tape-dot{color:rgba(0,0,0,0.35)}
 @keyframes tape{from{transform:translateX(0)}to{transform:translateX(-50%)}}
@@ -28,21 +28,29 @@ nav{position:fixed;top:34px;left:0;right:0;z-index:999;padding:16px 40px;display
 .nav-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.15rem;letter-spacing:0.08em;text-transform:uppercase}
 .nav-logo span{background:var(--gold-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .nav-links{display:flex;align-items:center;gap:28px}
-.nav-links a{color:var(--muted);font-size:0.82rem;font-weight:500;text-decoration:none;transition:color 0.2s;letter-spacing:0.03em}
+.nav-links a{color:var(--muted);font-size:0.82rem;font-weight:500;text-decoration:none;transition:color 0.2s}
 .nav-links a:hover{color:var(--white)}
 .nav-cta{background:var(--gold-btn);color:#000!important;font-weight:700!important;font-size:0.78rem!important;padding:9px 22px;text-decoration:none;box-shadow:0 2px 12px rgba(212,175,55,0.3);transition:box-shadow 0.2s,transform 0.15s}
 .nav-cta:hover{box-shadow:0 4px 20px rgba(212,175,55,0.5)!important;transform:translateY(-1px)}
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:140px 24px 80px;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);width:800px;height:500px;background:radial-gradient(ellipse,rgba(212,175,55,0.06) 0%,transparent 65%);pointer-events:none}
+.hero::before{content:'';position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);width:900px;height:600px;background:radial-gradient(ellipse,rgba(212,175,55,0.07) 0%,transparent 65%);pointer-events:none}
 .hero-tag{font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.4em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;opacity:0;animation:fadeUp 0.6s 0.1s ease forwards}
 .hero-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(4rem,12vw,9rem);line-height:0.9;text-transform:uppercase;color:var(--white);opacity:0;animation:fadeUp 0.7s 0.2s ease forwards}
 .hero-title .gold{background:var(--gold-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{font-size:clamp(0.9rem,2vw,1.05rem);color:var(--muted);line-height:1.85;max-width:520px;margin-top:24px;opacity:0;animation:fadeUp 0.7s 0.35s ease forwards}
+.hero-sub{font-size:clamp(0.9rem,2vw,1.05rem);color:var(--muted);line-height:1.85;max-width:560px;margin-top:24px;opacity:0;animation:fadeUp 0.7s 0.35s ease forwards}
 .hero-actions{display:flex;align-items:center;gap:16px;margin-top:44px;flex-wrap:wrap;justify-content:center;opacity:0;animation:fadeUp 0.7s 0.5s ease forwards}
 .btn-gold{background:var(--gold-btn);color:#000;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:0.95rem;letter-spacing:0.06em;padding:16px 36px;border:none;cursor:pointer;text-decoration:none;display:inline-block;box-shadow:0 4px 24px rgba(212,175,55,0.35);transition:box-shadow 0.2s,transform 0.15s;text-transform:uppercase}
 .btn-gold:hover{box-shadow:0 6px 32px rgba(212,175,55,0.55);transform:translateY(-2px)}
 .btn-ghost{color:var(--muted);font-size:0.82rem;font-weight:500;text-decoration:none;border-bottom:1px solid var(--border2);padding-bottom:2px;transition:color 0.2s}
 .btn-ghost:hover{color:var(--white)}
+.sniper-demo{margin-top:48px;opacity:0;animation:fadeUp 0.7s 0.7s ease forwards}
+.sniper-card{background:linear-gradient(135deg,#0f0f12,#1a1a1d);border:1px solid var(--green);border-radius:10px;padding:14px 18px;max-width:380px;text-align:left;margin:0 auto}
+.sniper-status{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:900;color:var(--green);letter-spacing:0.05em;margin-bottom:6px}
+.exec-badge{display:inline-flex;align-items:center;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);padding:3px 9px;border-radius:4px;font-size:0.7rem;color:var(--green);font-weight:700}
+.sniper-zone{background:#111115;border-radius:6px;padding:8px 12px;margin:8px 0}
+.sniper-zone-label{font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;margin-bottom:3px}
+.sniper-zone-price{font-size:0.95rem;font-weight:700;color:var(--gold)}
+.sniper-zone-script{font-size:0.68rem;color:var(--muted);line-height:1.5;margin-top:4px}
 .stats{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:32px 40px;display:flex;align-items:center;justify-content:center;gap:60px;flex-wrap:wrap;background:linear-gradient(180deg,#0d0d0f 0%,#090909 100%)}
 .stat-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2.4rem;background:var(--gold-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .stat-lbl{font-size:0.65rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-top:4px}
@@ -50,7 +58,24 @@ nav{position:fixed;top:34px;left:0;right:0;z-index:999;padding:16px 40px;display
 .eyebrow{font-size:0.65rem;font-weight:700;letter-spacing:0.35em;text-transform:uppercase;background:var(--gold-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:14px;display:inline-block}
 .section-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(2.2rem,5vw,3.8rem);text-transform:uppercase;line-height:0.95;color:var(--white);margin-bottom:16px}
 .section-sub{font-size:1rem;color:var(--muted);line-height:1.8;max-width:560px}
-.ebook-section{background:linear-gradient(180deg,#090909 0%,#0d0d0f 100%);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:100px 40px;position:relative;overflow:hidden}
+.layers-section{padding:100px 40px;max-width:1100px;margin:0 auto}
+.layers-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);margin-top:60px}
+.layer-card{background:linear-gradient(145deg,#0e0e12,#0a0a0d);padding:44px 40px;opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease}
+.layer-card.visible{opacity:1;transform:translateY(0)}
+.layer-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:3rem;background:var(--gold-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;opacity:0.2;line-height:1;margin-bottom:16px}
+.layer-title{font-weight:600;font-size:1rem;color:var(--white);margin-bottom:10px}
+.layer-desc{font-size:0.84rem;line-height:1.75;color:var(--muted)}
+.features-section{padding:100px 40px;background:linear-gradient(180deg,#090909,#0d0d0f);border-top:1px solid var(--border)}
+.features-inner{max-width:1100px;margin:0 auto}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin-top:60px}
+.feature-card{background:linear-gradient(145deg,#0e0e12,#0a0a0d);padding:40px 36px;opacity:0;transform:translateY(20px);transition:background 0.3s,opacity 0.5s ease,transform 0.5s ease;position:relative;overflow:hidden}
+.feature-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(212,175,55,0.12),transparent)}
+.feature-card.visible{opacity:1;transform:translateY(0)}
+.feature-card:hover{background:linear-gradient(145deg,#131318,#0f0f13)}
+.feature-icon{font-size:1.6rem;margin-bottom:20px}
+.feature-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.2rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--white);margin-bottom:12px}
+.feature-desc{font-size:0.85rem;line-height:1.75;color:var(--muted)}
+.ebook-section{background:linear-gradient(180deg,#0d0d0f,#090909);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:100px 40px;position:relative;overflow:hidden}
 .ebook-section::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 70% 50%,rgba(212,175,55,0.04) 0%,transparent 60%);pointer-events:none}
 .ebook-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
 .ebook-book{position:relative;aspect-ratio:0.7;background:linear-gradient(145deg,#1a1a1d,#111115);border:1px solid var(--border2);box-shadow:8px 8px 0 rgba(212,175,55,0.15),16px 16px 0 rgba(212,175,55,0.06),0 40px 80px rgba(0,0,0,0.6);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 32px;text-align:center}
@@ -67,18 +92,17 @@ nav{position:fixed;top:34px;left:0;right:0;z-index:999;padding:16px 40px;display
 .ebook-perks li::before{content:'✦';color:var(--gold);font-size:0.65rem;flex-shrink:0}
 .trial-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(212,175,55,0.08);border:1px solid rgba(212,175,55,0.2);padding:10px 18px;margin-bottom:24px;font-size:0.8rem;color:var(--gold)}
 .trial-badge strong{color:var(--white)}
-.coming-section{padding:100px 40px;max-width:1100px;margin:0 auto}
-.coming-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);margin-top:60px}
-.coming-card{background:linear-gradient(145deg,#0e0e12,#0a0a0d);padding:44px 40px;position:relative;overflow:hidden}
-.coming-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(212,175,55,0.1),transparent)}
-.coming-price{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:3rem}
-.coming-price sup{font-size:1.2rem;vertical-align:top;margin-top:10px;display:inline-block}
-.coming-price span{font-size:1rem;font-weight:400;color:var(--muted)}
-.coming-label{font-size:0.65rem;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;margin-bottom:12px}
-.coming-note{font-size:0.85rem;color:var(--muted);line-height:1.7;margin:16px 0 24px}
-.coming-perks{list-style:none}
-.coming-perks li{font-size:0.83rem;color:var(--muted);padding:7px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
-.coming-perks li::before{content:'—';color:var(--border2)}
+.screener-section{padding:100px 40px;max-width:1100px;margin:0 auto}
+.screener-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);margin-top:60px}
+.screener-card{background:linear-gradient(145deg,#0e0e12,#0a0a0d);padding:44px 40px;position:relative;overflow:hidden}
+.screener-price{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:3rem}
+.screener-price sup{font-size:1.2rem;vertical-align:top;margin-top:10px;display:inline-block}
+.screener-price span{font-size:1rem;font-weight:400;color:var(--muted)}
+.screener-label{font-size:0.65rem;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;margin-bottom:12px}
+.screener-note{font-size:0.85rem;color:var(--muted);line-height:1.7;margin:16px 0 24px}
+.screener-perks{list-style:none}
+.screener-perks li{font-size:0.83rem;color:var(--muted);padding:7px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.screener-perks li::before{content:'—';color:var(--border2)}
 .featured-card{border:1px solid rgba(212,175,55,0.2)!important;background:linear-gradient(145deg,#131318,#0f0f13)!important}
 .founder-ribbon{position:absolute;top:20px;right:-30px;background:var(--gold);color:#000;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:0.72rem;letter-spacing:0.1em;padding:5px 40px;transform:rotate(45deg)}
 .soon-btn{display:block;text-align:center;padding:14px;background:var(--card2);border:1px solid var(--border2);color:var(--muted);font-size:0.82rem;font-weight:600;letter-spacing:0.05em;text-decoration:none;cursor:default;margin-top:8px}
@@ -97,14 +121,6 @@ nav{position:fixed;top:34px;left:0;right:0;z-index:999;padding:16px 40px;display
 .success-msg h3{color:var(--green);font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;margin-bottom:6px}
 .success-msg p{color:var(--muted);font-size:0.85rem}
 .form-disclaimer{font-size:0.72rem;color:var(--muted2);line-height:1.7;margin-top:16px}
-.how-section{padding:100px 40px;border-top:1px solid var(--border)}
-.how-inner{max-width:900px;margin:0 auto}
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2px;margin-top:60px;background:var(--border)}
-.step{background:linear-gradient(145deg,#0e0e12,#0a0a0d);padding:40px 36px;position:relative;opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease}
-.step.visible{opacity:1;transform:translateY(0)}
-.step-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:4rem;background:var(--gold-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;opacity:0.25;line-height:1;margin-bottom:16px}
-.step-title{font-weight:600;font-size:1rem;color:var(--white);margin-bottom:10px}
-.step-desc{font-size:0.84rem;line-height:1.75;color:var(--muted)}
 footer{border-top:1px solid var(--border);padding:48px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
 .footer-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.1rem;letter-spacing:0.08em}
 .footer-logo span{background:var(--gold-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -114,23 +130,12 @@ footer p{font-size:0.72rem;color:var(--muted2);line-height:1.7;max-width:500px}
 .footer-links a:hover{color:var(--gold)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:768px){
-  nav{padding:14px 20px} .nav-links{display:none}
-  .ebook-inner{grid-template-columns:1fr;gap:48px}
-  .coming-grid{grid-template-columns:1fr}
-  .stats{gap:32px;padding:32px 20px} .stat-div{display:none}
-  .ebook-section,.coming-section,.how-section,.signup-section{padding:64px 20px}
+  nav{padding:14px 20px}.nav-links{display:none}
+  .ebook-inner,.screener-grid,.layers-grid{grid-template-columns:1fr}
+  .stats{gap:32px;padding:32px 20px}.stat-div{display:none}
+  .layers-section,.features-section,.ebook-section,.screener-section,.signup-section{padding:64px 20px}
   footer{flex-direction:column;text-align:center;padding:40px 20px}
 }
-
-.features-section{padding:100px 40px;max-width:1100px;margin:0 auto}
-.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin-top:60px;box-shadow:0 0 0 1px rgba(212,175,55,0.06),0 30px 80px rgba(0,0,0,0.4)}
-.feature-card{background:linear-gradient(145deg,#0e0e12 0%,#0a0a0d 100%);padding:40px 36px;opacity:0;transform:translateY(20px);transition:background 0.3s,opacity 0.5s ease,transform 0.5s ease;position:relative;overflow:hidden}
-.feature-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(212,175,55,0.12),transparent)}
-.feature-card.visible{opacity:1;transform:translateY(0)}
-.feature-card:hover{background:linear-gradient(145deg,#131318 0%,#0f0f13 100%)}
-.feature-icon{font-size:1.6rem;margin-bottom:20px}
-.feature-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.2rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--white);margin-bottom:12px}
-.feature-desc{font-size:0.85rem;line-height:1.75;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -138,84 +143,147 @@ footer p{font-size:0.72rem;color:var(--muted2);line-height:1.7;max-width:500px}
 <div class="tape">
   <div class="tape-inner">
     <span class="tape-item">PaidButPressured</span><span class="tape-dot">◆</span>
+    <span class="tape-item">Sniper Mode — 1-Minute Trigger Detection</span><span class="tape-dot">◆</span>
     <span class="tape-item">Pressure Trades Ebook — $7.99</span><span class="tape-dot">◆</span>
-    <span class="tape-item">Includes 7-Day Screener Trial</span><span class="tape-dot">◆</span>
     <span class="tape-item">Screener Launching Soon</span><span class="tape-dot">◆</span>
+    <span class="tape-item">Setup Intelligence + Execution Intelligence</span><span class="tape-dot">◆</span>
     <span class="tape-item">First 150 Lock Founder Rate For Life</span><span class="tape-dot">◆</span>
-    <span class="tape-item">Real Setups. Real Edge.</span><span class="tape-dot">◆</span>
     <span class="tape-item">PaidButPressured</span><span class="tape-dot">◆</span>
+    <span class="tape-item">Sniper Mode — 1-Minute Trigger Detection</span><span class="tape-dot">◆</span>
     <span class="tape-item">Pressure Trades Ebook — $7.99</span><span class="tape-dot">◆</span>
-    <span class="tape-item">Includes 7-Day Screener Trial</span><span class="tape-dot">◆</span>
     <span class="tape-item">Screener Launching Soon</span><span class="tape-dot">◆</span>
+    <span class="tape-item">Setup Intelligence + Execution Intelligence</span><span class="tape-dot">◆</span>
     <span class="tape-item">First 150 Lock Founder Rate For Life</span><span class="tape-dot">◆</span>
-    <span class="tape-item">Real Setups. Real Edge.</span><span class="tape-dot">◆</span>
   </div>
 </div>
 
 <nav>
   <div class="nav-logo">PAID <span>BUT PRESSURED</span></div>
   <div class="nav-links">
+    <a href="#layers">How It Works</a>
+    <a href="#features">Features</a>
     <a href="#ebook">The Ebook</a>
     <a href="#screener">Screener</a>
-    <a href="#how">How It Works</a>
     <a href="#ebook" class="nav-cta">GET THE EBOOK →</a>
   </div>
 </nav>
 
 <section class="hero">
-  <div class="hero-tag">📡 Options Intelligence for Everyday Traders</div>
+  <div class="hero-tag">📡 Setup Intelligence + Execution Intelligence</div>
   <h1 class="hero-title">PAID<br><span class="gold">BUT</span><br>PRESSURED</h1>
-  <p class="hero-sub">Most traders are guessing. We built a system that finds high-conviction setups before the crowd does — with a 7-point execution gate, market regime detection, and real-time pattern scanning.</p>
+  <p class="hero-sub">Most screeners tell you what to trade. PBP tells you when to pull the trigger — with 1-minute candle analysis, execution scoring, and a Sniper Mode that surfaces only the setups ready to move right now.</p>
   <div class="hero-actions">
     <a href="#ebook" class="btn-gold">Start With the Ebook — $7.99 →</a>
     <a href="#signup" class="btn-ghost">Reserve Founder Rate</a>
+  </div>
+  <div class="sniper-demo">
+    <div style="font-size:0.65rem;color:var(--muted);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:10px;text-align:center">Live Sniper Card Example</div>
+    <div class="sniper-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <div class="sniper-status">🟢 ENTER NOW</div>
+        <div class="exec-badge">97% EXECUTION</div>
+      </div>
+      <div style="font-size:0.8rem;font-weight:700;color:var(--white);margin-bottom:2px">⚡ PULLBACK HOLD → GO</div>
+      <div style="font-size:0.7rem;color:var(--muted);margin-bottom:8px">Price holding EMA8 on 1min — buyers stepping in</div>
+      <div class="sniper-zone">
+        <div class="sniper-zone-label">BREAKOUT ZONE · ⏱ 1–2 CANDLES</div>
+        <div class="sniper-zone-price">$121.80 – $122.20</div>
+        <div class="sniper-zone-script">Enter between $121.80–$122.20 on push<br>If price breaks above $122.20 → wait for pullback<br>If price loses $121.80 → setup invalid</div>
+      </div>
+      <div style="font-size:0.68rem;color:var(--muted)">Missed entry: Wait for pullback to $121.80–$122.00</div>
+    </div>
   </div>
 </section>
 
 <div class="stats">
   <div><div class="stat-val">7</div><div class="stat-lbl">Point Gate System</div></div>
   <div class="stat-div"></div>
-  <div><div class="stat-val">20+</div><div class="stat-lbl">Pattern Types Detected</div></div>
+  <div><div class="stat-val">6</div><div class="stat-lbl">Signal Precision Checks</div></div>
   <div class="stat-div"></div>
-  <div><div class="stat-val">120+</div><div class="stat-lbl">Tickers Scanned</div></div>
+  <div><div class="stat-val">1min</div><div class="stat-lbl">Candle Trigger Analysis</div></div>
   <div class="stat-div"></div>
   <div><div class="stat-val">8</div><div class="stat-lbl">Regime Classifications</div></div>
 </div>
 
+<section class="layers-section" id="layers">
+  <div class="eyebrow">Two Layers. One Decision.</div>
+  <h2 class="section-title">FROM SETUP<br>TO EXECUTION</h2>
+  <p class="section-sub">Most screeners stop at the pattern. PBP goes further — analyzing 1-minute candles in real time to tell you not just what to trade, but exactly when.</p>
+  <div class="layers-grid">
+    <div class="layer-card">
+      <div class="layer-num">01</div>
+      <div class="layer-title">Setup Intelligence</div>
+      <div class="layer-desc">7-point gate system. 6-signal precision scoring. Sector ETF trend, relative strength, momentum filter, commodity correlation. Market regime across 8 conditions. News sentiment weighted by source credibility. A signal doesn't surface until it earns it.</div>
+    </div>
+    <div class="layer-card">
+      <div class="layer-num">02</div>
+      <div class="layer-title">Execution Intelligence</div>
+      <div class="layer-desc">1-minute candle analysis detects VWAP Reclaim, Pullback Hold, Momentum Break, and Rejection Wick triggers in real time. A separate Execution Score measures timing quality independently from setup quality. Entry zones with execution scripts and missed entry plans.</div>
+    </div>
+    <div class="layer-card">
+      <div class="layer-num">03</div>
+      <div class="layer-title">Sniper Mode</div>
+      <div class="layer-desc">A dedicated tab showing only GO NOW signals with active triggers and execution scores above 75%. No noise. No watching signals. When Sniper Mode has entries — the moment is now. When it's empty — nothing is ready.</div>
+    </div>
+    <div class="layer-card">
+      <div class="layer-num">04</div>
+      <div class="layer-title">Paper Trading + Telegram</div>
+      <div class="layer-desc">GO NOW signals auto-enter the paper trading engine. Every entry and exit fires to Telegram with full context — pattern, confidence, gates, signals, P&L, and every signal that fired at entry. Track your edge before risking real capital.</div>
+    </div>
+  </div>
+</section>
+
 <section class="features-section" id="features">
-  <div class="eyebrow">What You Get</div>
-  <h2 class="section-title">BUILT FOR<br>REAL TRADERS</h2>
-  <p class="section-sub">Every feature in the screener exists for one reason — to put better information in front of you before you make a decision.</p>
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon">📡</div>
-      <div class="feature-title">Real-Time Signal Cards</div>
-      <div class="feature-desc">Every signal comes with entry level, stop level, profit zone, strike price, premium estimate, R:R ratio, and max loss — all pre-calculated. No math required.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🔭</div>
-      <div class="feature-title">Pattern Detection Engine</div>
-      <div class="feature-desc">Automatically detects 10+ patterns across quick and swing modes — Double Bottom, Head & Shoulders, VWAP Reclaim, Bull Flag, ORB, Triangles, and more.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🧭</div>
-      <div class="feature-title">Market Regime Engine</div>
-      <div class="feature-desc">Every scan runs a 5-layer market analysis that classifies conditions into 8 regime types — Bull Confirmed, Bear Trap, Distribution, Capitulation, and more. Your signals adjust accordingly.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">⚙️</div>
-      <div class="feature-title">7-Point Execution Gate</div>
-      <div class="feature-desc">Before any signal reaches you, it passes 7 independent checks — volatility, volume, momentum, entry timing, risk/reward, expiration, and earnings risk. No gate, no signal.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🧠</div>
-      <div class="feature-title">AI Trade Briefs</div>
-      <div class="feature-desc">Every GO NOW signal gets an instant AI analysis — setup rating, reasoning, key risk, and edge. Built on Claude AI, powered by the signal data in real time.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">📊</div>
-      <div class="feature-title">Paper Trading Engine</div>
-      <div class="feature-desc">Auto-logs GO NOW signals as paper trades and tracks them in real time. Win rate, P&L, and closed trade history so you can prove the edge before risking real capital.</div>
+  <div class="features-inner">
+    <div class="eyebrow">What You Get</div>
+    <h2 class="section-title">BUILT DIFFERENT.<br>WORKS DIFFERENT.</h2>
+    <p class="section-sub">Every feature exists because it matters. Nothing is for show.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <div class="feature-title">Sniper Strip</div>
+        <div class="feature-desc">The most important thing on every signal card. Entry status, trigger type, window, zone, execution script, and missed entry plan — decision-first at the top. ENTER NOW means now. EXTENDED means don't chase.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">1-Minute Trigger Detection</div>
+        <div class="feature-desc">VWAP Reclaim, Pullback Hold, Momentum Break, and Rejection Wick detected on 1-minute candles, refreshed every 60 seconds. The layer that separates a great setup from a great entry.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">Dual Scoring System</div>
+        <div class="feature-desc">Setup Score measures pattern quality. Execution Score measures timing quality. A 97% setup with 30% execution is still a bad trade. Both must align for GO NOW.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📰</div>
+        <div class="feature-title">News Sentiment Engine</div>
+        <div class="feature-desc">Live news scored by keyword weight and source credibility. Reuters 3x, Seeking Alpha 0.8x. Opposing news confidence -12. Breaking news badge when 3+ articles in 15 minutes. News is signal, not noise.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧭</div>
+        <div class="feature-title">Market Regime Engine</div>
+        <div class="feature-desc">8 regime classifications from Bull Confirmed to Capitulation. Macro triggers surface automatically. The regime adjusts signal confidence — a CALL in a Bear Trap gets penalized. Context matters.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚙️</div>
+        <div class="feature-title">7-Point Gate System</div>
+        <div class="feature-desc">Volatility, volume, momentum divergence, entry timing, risk/reward, expiration, and earnings risk. Every gate is a hard filter. 5/7 minimum for GO NOW. 6/7 or 7/7 earns PRIME SETUP.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <div class="feature-title">Telegram Alerts</div>
+        <div class="feature-desc">Entry alerts with full setup context. Exit alerts with WIN/LOSS, P&L, peak gain, and every signal that fired at entry. The signal follows you whether you're watching the screen or not.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">Paper Trading Engine</div>
+        <div class="feature-desc">GO NOW signals auto-enter paper trades. Live stop and target monitoring. Win rate, P&L history, and trade log saved per user. Prove the edge before you risk real capital.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔭</div>
+        <div class="feature-title">Pattern Detection Engine</div>
+        <div class="feature-desc">10+ patterns across Quick and Swing modes. Double Bottom, H&S, VWAP Reclaim, Bull Flag, ORB, Triangles, and more. Each routes to the correct timeframe automatically.</div>
+      </div>
     </div>
   </div>
 </section>
@@ -228,59 +296,68 @@ footer p{font-size:0.72rem;color:var(--muted2);line-height:1.7;max-width:500px}
       <div class="ebook-book-sub">The Everyday Person's Guide to<br>Options Trading</div>
       <div class="ebook-book-pages">20 CHAPTERS · 28 PAGES</div>
     </div>
-    <div class="ebook-content">
+    <div>
       <div class="eyebrow">Available Now</div>
       <h2 class="section-title">THE<br>EBOOK</h2>
-      <p class="section-sub" style="margin-bottom:24px;">Everything you need to understand options trading — written in plain language, built around the exact patterns and logic that power the PaidButPressured screener.</p>
-      <div class="trial-badge">🎯 <span><strong>Bonus:</strong> Includes a 7-day free trial of the screener when it launches</span></div>
+      <p class="section-sub" style="margin-bottom:24px">Everything you need to understand options trading — written in plain language, built around the exact patterns and logic that power the PBP screener.</p>
+      <div class="trial-badge">🎯 <span><strong>Bonus:</strong> Includes a 7-day free trial of the screener at launch</span></div>
       <span class="price-tag">$7.99</span>
       <p class="price-note">One-time purchase. Instant download. Yours forever.</p>
       <ul class="ebook-perks">
         <li>How options actually work — no finance degree required</li>
         <li>Every quick trade pattern: VWAP, ORB, Bull Flag, Momentum</li>
-        <li>Every swing pattern: Double Bottom, H&amp;S, Triangles, and more</li>
+        <li>Every swing pattern: Double Bottom, H&S, Triangles, and more</li>
         <li>The 7-Point Gate explained — and how to use it</li>
         <li>Market Regime — how to read the room before every trade</li>
         <li>Position sizing, entries, stops, and targets</li>
         <li>The complete pre-trade checklist</li>
         <li>7-day screener trial included at launch</li>
       </ul>
-      <a href="https://buy.stripe.com/4gM3cn4dH6Gwh2UeOd1B602" target="_blank" class="btn-gold" style="display:block;text-align:center;">GET PRESSURE TRADES — $7.99 →</a>
+      <a href="https://buy.stripe.com/4gM3cn4dH6Gwh2UeOd1B602" target="_blank" class="btn-gold" style="display:block;text-align:center">GET PRESSURE TRADES — $7.99 →</a>
     </div>
   </div>
 </section>
 
-<section class="coming-section" id="screener">
+<section class="screener-section" id="screener">
   <div class="eyebrow">Coming Soon</div>
   <h2 class="section-title">THE<br>SCREENER</h2>
-  <p class="section-sub">Real-time options signal detection with pattern recognition, regime analysis, and a 7-point execution gate. Reserve your founder rate now — first 150 members lock it in for life.</p>
-  <div class="coming-grid">
-    <div class="coming-card featured-card" style="overflow:hidden;position:relative;">
+  <p class="section-sub">Setup intelligence. Execution intelligence. Sniper Mode. News sentiment. Real-time 1-minute trigger detection. Reserve your founder rate — first 150 members lock it in for life.</p>
+  <div class="screener-grid">
+    <div class="screener-card featured-card" style="overflow:hidden;position:relative">
       <div class="founder-ribbon">FOUNDER</div>
-      <div class="coming-label" style="color:var(--gold);">First 150 Members</div>
-      <div class="coming-price" style="background:var(--gold-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"><sup>$</sup>14<span>.99/mo</span></div>
-      <p class="coming-note"><strong style="color:var(--white);">Locked in for life.</strong> Your rate never increases — ever. Reserve your spot now and be first to access when we launch.</p>
-      <ul class="coming-perks">
+      <div class="screener-label" style="color:var(--gold)">First 150 Members</div>
+      <div class="screener-price" style="background:var(--gold-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"><sup>$</sup>14<span>.99/mo</span></div>
+      <p class="screener-note"><strong style="color:var(--white)">Locked in for life.</strong> Your rate never increases — ever.</p>
+      <ul class="screener-perks">
         <li>Full screener access</li>
+        <li>Sniper Mode tab</li>
+        <li>1-minute trigger detection</li>
+        <li>Execution scoring</li>
+        <li>News sentiment engine</li>
         <li>Quick &amp; Swing signal modes</li>
-        <li>AI trade briefs on every signal</li>
+        <li>AI trade briefs</li>
         <li>Market regime engine</li>
-        <li>Sector scans + personal watchlist</li>
+        <li>Telegram alerts (entry + exit)</li>
+        <li>Paper trading engine</li>
         <li>Founding member status</li>
-        <li>Priority feature requests</li>
       </ul>
-      <a href="#signup" class="btn-gold" style="display:block;text-align:center;margin-top:28px;text-decoration:none;">RESERVE MY FOUNDER RATE →</a>
+      <a href="#signup" class="btn-gold" style="display:block;text-align:center;margin-top:28px;text-decoration:none">RESERVE MY FOUNDER RATE →</a>
     </div>
-    <div class="coming-card">
-      <div class="coming-label" style="color:var(--muted);">After 150 Members</div>
-      <div class="coming-price" style="color:var(--white);"><sup style="color:var(--muted);">$</sup>29<span>.99/mo</span></div>
-      <p class="coming-note">Full access to everything — same screener, same signals. Standard rate applies once founding seats are filled.</p>
-      <ul class="coming-perks">
+    <div class="screener-card">
+      <div class="screener-label" style="color:var(--muted)">After 150 Members</div>
+      <div class="screener-price" style="color:var(--white)"><sup style="color:var(--muted)">$</sup>29<span>.99/mo</span></div>
+      <p class="screener-note">Full access to everything — same screener, same signals.</p>
+      <ul class="screener-perks">
         <li>Full screener access</li>
+        <li>Sniper Mode tab</li>
+        <li>1-minute trigger detection</li>
+        <li>Execution scoring</li>
+        <li>News sentiment engine</li>
         <li>Quick &amp; Swing signal modes</li>
-        <li>AI trade briefs on every signal</li>
+        <li>AI trade briefs</li>
         <li>Market regime engine</li>
-        <li>Sector scans + personal watchlist</li>
+        <li>Telegram alerts</li>
+        <li>Paper trading engine</li>
       </ul>
       <div class="soon-btn">COMING SOON</div>
     </div>
@@ -292,8 +369,8 @@ footer p{font-size:0.72rem;color:var(--muted2);line-height:1.7;max-width:500px}
     <h2 class="signup-title">RESERVE<br><span>YOUR SPOT.</span></h2>
     <p class="signup-sub">Drop your email to lock in the Founder Rate at <strong>$14.99/month for life</strong>.<br>First 150 only. You'll be first notified the moment we go live.</p>
     <div class="signup-form" id="signupForm">
-      <input type="text" placeholder="First Name" id="fname" />
-      <input type="email" placeholder="Email Address" id="email" />
+      <input type="text" placeholder="First Name" id="fname"/>
+      <input type="email" placeholder="Email Address" id="email"/>
       <button onclick="handleSignup()">LOCK MY FOUNDER RATE →</button>
     </div>
     <div class="success-msg" id="successMsg">
@@ -301,30 +378,6 @@ footer p{font-size:0.72rem;color:var(--muted2);line-height:1.7;max-width:500px}
       <p>Founder rate reserved. We'll hit you the moment we go live — watch your inbox.</p>
     </div>
     <p class="form-disclaimer">No card required. Drop your email and we'll reach out at launch.<br>Founder pricing locked for the first 150 who subscribe when the screener opens.</p>
-  </div>
-</section>
-
-<section class="how-section" id="how">
-  <div class="how-inner">
-    <div class="eyebrow">Simple Process</div>
-    <h2 class="section-title">THREE STEPS.<br>THAT'S IT.</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">01</div>
-        <div class="step-title">Read the Ebook</div>
-        <div class="step-desc">Get Pressure Trades and build your foundation. Understand every pattern, every gate, every concept before you place a single trade.</div>
-      </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <div class="step-title">Use Your Trial</div>
-        <div class="step-desc">Your 7-day screener trial activates at launch. Run real scans, see real signals, paper trade before you risk a dollar.</div>
-      </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <div class="step-title">Execute With Conviction</div>
-        <div class="step-desc">GO NOW signals. 7-point gate. Regime context. Entry, stop, and target already calculated. You bring the discipline.</div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -341,22 +394,20 @@ footer p{font-size:0.72rem;color:var(--muted2);line-height:1.7;max-width:500px}
 </footer>
 
 <script>
-const revealEls = document.querySelectorAll('.step, .feature-card');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((e,i) => {
-    if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*100); observer.unobserve(e.target); }
-  });
+const revealEls=document.querySelectorAll('.layer-card,.feature-card');
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);observer.unobserve(e.target);}});
 },{threshold:0.1});
 revealEls.forEach(el=>observer.observe(el));
 
 async function handleSignup(){
-  const fname = document.getElementById('fname').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const btn   = document.querySelector('.signup-form button');
-  if(!fname||!email||!email.includes('@')){ alert('Please enter your name and a valid email.'); return; }
-  btn.textContent='LOCKING IN...'; btn.disabled=true;
+  const fname=document.getElementById('fname').value.trim();
+  const email=document.getElementById('email').value.trim();
+  const btn=document.querySelector('.signup-form button');
+  if(!fname||!email||!email.includes('@')){alert('Please enter your name and a valid email.');return;}
+  btn.textContent='LOCKING IN...';btn.disabled=true;
   const MAILCHIMP_URL='https://carrd.us20.list-manage.com/subscribe/post?u=9d1bf332dfe26edda5cb83a41&id=3a6eae40dd&f_id=00885fe0f0';
-  window.mailchimpCallback=function(){ document.getElementById('signupForm').style.display='none'; document.getElementById('successMsg').style.display='block'; };
+  window.mailchimpCallback=function(){document.getElementById('signupForm').style.display='none';document.getElementById('successMsg').style.display='block';};
   const params=new URLSearchParams({EMAIL:email,FNAME:fname});
   const script=document.createElement('script');
   script.src=MAILCHIMP_URL.replace('/post?','/post-json?')+'&'+params+'&c=mailchimpCallback';
